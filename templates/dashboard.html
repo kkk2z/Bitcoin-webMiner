@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome {{ user.username }}</h1>
+    <p>Balance: {{ user.balance }} BTC</p>
+    <p>Mining Address: {{ user.mining_address }}</p>
+    <h2>Mining Logs</h2>
+    <!-- ここにマイニングログを表示するコードを追加 -->
+    <a href="{{ url_for('average_balance') }}">Average Bitcoin Balance</a>
+</body>
+</html>
