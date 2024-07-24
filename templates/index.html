@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Mining Site</title>
+</head>
+<body>
+    <h1>Welcome to My Mining Site</h1>
+    <form action="/set_address" method="post">
+        <label for="address">Mining Address:</label>
+        <input type="text" id="address" name="address" required>
+        <button type="submit">Set Address</button>
+    </form>
+    <script src="{{ url_for('static', filename='mining_script.js') }}"></script>
+</body>
+</html>
