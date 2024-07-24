@@ -30,8 +30,9 @@ async def index():
 @app.route('/login', methods=['GET', 'POST'])
 async def login():
     if request.method == 'POST':
-        username = (await request.form).get('username')
-        password = (await request.form).get('password')
+        form = await request.form
+        username = form.get('username')
+        password = form.get('password')
         user = await User.query.filter_by(username=username).first()
         if user and user.password == password:
             await login_user(user)
@@ -47,7 +48,8 @@ async def dashboard():
 @app.route('/set_address', methods=['POST'])
 @login_required
 async def set_address():
-    address = (await request.form).get('address')
+    form = await request.form
+    address = form.get('address')
     current_user.mining_address = address
     await db.session.commit()
     flash('Mining address updated successfully!', 'success')
@@ -55,9 +57,11 @@ async def set_address():
 
 @app.route('/average')
 async def average_balance():
-    total_balance = await db.session.execute('SELECT SUM(balance) FROM user')
-    user_count = await db.session.execute('SELECT COUNT(*) FROM user')
-    average = total_balance[0][0] / user_count[0][0] if user_count[0][0] > 0 else 0
+    total_balance_result = await db.session.execute('SELECT SUM(balance) FROM user')
+    user_count_result = await db.session.execute('SELECT COUNT(*) FROM user')
+    total_balance = total_balance_result.first()[0]
+    user_count = user_count_result.first()[0]
+    average = total_balance / user_count if user_count > 0 else 0
     return f'Average Balance: {average} BTC'
 
 async def send_rewards(user, amount):
